@@ -1,0 +1,61 @@
+/* ELIMINAMOS EL ESTILO AL BODY PARA NO ROMPER OTRAS PÁGINAS */
+
+/* Nueva clase contenedora principal */
+.home-section {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Ocupa toda la pantalla */
+  width: 100%;
+  
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  
+  background-color: #eafaf1; /* Tu verde suave */
+  font-family: Arial, sans-serif;
+  
+  /* IMPORTANTE: El espacio para que la Navbar no lo tape */
+  padding-top: 80px; 
+  box-sizing: border-box;
+}
+
+/* Contenedor de la tarjeta (Esto lo tenías bien) */
+.home-container {
+  max-width: 800px;
+  width: 90%;
+  padding: 50px 30px; /* Un poco más de aire interno */
+  text-align: center;
+
+  background: #f8fff9;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(76, 140, 103, 0.1); /* Sombra más elegante */
+  animation: fadeIn 0.8s ease-out; /* Un pelín más suave */
+}
+
+/* Títulos */
+.home-container h1 {
+  color: #2e7d32; /* Un verde un poco más fuerte para contraste */
+  margin-bottom: 20px;
+  font-size: 2.5rem; /* Usar rem es mejor práctica */
+  font-weight: 800;
+}
+
+/* Párrafos */
+.home-container p {
+  color: #5f6f63;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,268 @@
+/* =========================================
+   1. ESTRUCTURA Y FONDO
+   ========================================= */
+.nosotros-section {
+
+    padding-top: 50px; 
+    
+    padding-bottom: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    height: auto;
+}
+/* Contenedor general */
+.contenido-tab {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Títulos y textos */
+.contenido-tab h3 {
+    font-size: 2.2rem;
+    color: #1a4d2e;
+    margin-bottom: 20px;
+    font-weight: 700;
+    margin-top: 100px; 
+
+}
+
+/* --- Intro Box (Para la pestaña Nosotros) --- */
+.intro-box {
+    /* Esto es lo que le faltaba: el mismo empujón que a los demás */
+    margin-top: 120px; 
+    margin-bottom: 120px;
+    
+    /* Opcional: Para que el texto no se vea tan ancho */
+    padding: 0 20px; 
+}
+
+.contenido-tab p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+/* Animación */
+.fade-in {
+    animation: slideUpFade 0.6s ease-out forwards;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   2. MENÚ DE PESTAÑAS
+   ========================================= */
+.nosotros-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 0 auto 60px auto;
+    flex-wrap: wrap;
+
+    position: sticky;
+    top: 100px;
+    z-index: 10;
+}
+
+.nosotros-tabs button {
+    background: white;
+    border: 1px solid #e5e7eb;
+    font-size: 1rem;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.nosotros-tabs button:hover {
+    color: #27ae60;
+    border-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.nosotros-tabs button.active {
+    background-color: #27ae60;
+    color: white;
+    border-color: #27ae60;
+    box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+}
+
+/* =========================================
+   3. ESTILOS ESPECÍFICOS (Propósito, Impacto, Equipo)
+   ========================================= */
+
+/* Propósito */
+.proposito-box {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 50px; 
+    margin-bottom: 200px;
+}
+
+.proposito-item {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    flex: 1;
+    min-width: 280px;
+    border-left: 5px solid #27ae60;
+}
+
+.proposito-item h4 {
+    font-size: 1.5rem;
+    color: #27ae60;
+    margin-top: 0;
+}
+
+/* Impacto: Stats */
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+
+.stat-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    border-top: 4px solid transparent;
+    transition: transform 0.3s ease;
+
+    width: 250px;
+    flex: 1 1 250px;
+}
+
+.stat-card h2 {
+    color: #27ae60;
+    font-size: 3rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+/* Equipo */
+.personas-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 200px;
+}
+
+.persona-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+    transition: all 0.4s ease;
+    overflow: hidden;
+
+    width: 300px;
+}
+
+.img-wrapper {
+    height: 280px;
+    overflow: hidden;
+}
+
+.persona-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.persona-card:hover .persona-img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 20px;
+    text-align: left;
+}
+
+.card-content h3 {
+    margin: 0;
+    color: #1a1a1a;
+    font-size: 1.4rem;
+}
+
+.cargo {
+    display: inline-block;
+    background-color: #e8f5e9;
+    color: #27ae60;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin: 10px 0 15px 0;
+}
+
+.linkedin-btn {
+    display: inline-flex;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #0077b5;
+    font-weight: 600;
+}
+
+/* =========================================
+   4. MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+    /* Ajuste del techo para celular (280px es mucho aquí, bajamos a 140px) */
+    .nosotros-section {
+        padding-top: 140px; 
+    }
+
+    /* Botones más pequeños */
+    .nosotros-tabs button {
+        width: 45%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Tarjetas al ancho completo */
+    .persona-card,
+    .stat-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    /* --- AQUÍ ESTÁ LA MAGIA --- */
+    /* Reseteamos los márgenes gigantes para que no se vea vacío en el cel */
+    
+    .personas-container {
+        margin-top: 50px; /* Bajamos de 300px a 50px */
+    }
+    
+    .proposito-box {
+        margin-top: 50px; /* Bajamos de 100/150px a 50px */
+    }
+    
+    .stats-grid {
+        margin-top: 50px;
+    }
+}

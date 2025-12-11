@@ -1,0 +1,191 @@
+/* =========================================
+   Navbar.css - Adaptado y Mejorado
+   ========================================= */
+
+/* Configuración base del Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px; /* Ajustado para dar aire a los lados */
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', sans-serif;
+    
+    /* CAMBIO IMPORTANTE: Fixed es más seguro para que no se mueva */
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    height: 80px; /* Altura fija para calcular el padding del body */
+    z-index: 1000;
+    box-sizing: border-box; /* Evita que el padding agrande la barra */
+}
+
+/* 1. Logo */
+.nav-brand a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2ecc71; /* Verde marca */
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    white-space: nowrap; /* Para que el logo no se parta nunca */
+}
+
+/* 2. Enlaces Centrales */
+.nav-links {
+    display: flex;
+    gap: 20px; /* Reduje un poco el espacio para que quepan todos */
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    font-size: 0.95rem; /* Un pelín más pequeño para textos largos */
+    transition: color 0.3s;
+    white-space: nowrap; /* CLAVE: Evita que "Proyectos y plataformas" se baje */
+}
+
+.nav-links a:hover {
+    color: #2ecc71;
+}
+
+/* --- NUEVO ESTILO: Botón Suscríbete --- */
+.nav-subscribe {
+    background-color: #e8f5e9; /* Verde muy clarito */
+    color: #27ae60 !important; /* Verde fuerte */
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700 !important;
+    font-size: 0.90rem !important;
+    transition: all 0.3s ease;
+}
+
+.nav-subscribe:hover {
+    background-color: #27ae60;
+    color: white !important; /* Se vuelve blanco al pasar el mouse */
+}
+
+/* 3. Zona de Usuario */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre los botones de la derecha */
+}
+
+.guest-menu {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Botones y Estilos Específicos */
+.btn-register {
+    background-color: #2ecc71;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.btn-register:hover {
+    background-color: #27ae60;
+}
+
+.btn-logout {
+    background: none;
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-logout:hover {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Estilos para Roles */
+.role-link {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.admin-link {
+    color: #c0392b;
+    border: 1px solid #c0392b;
+}
+
+.advisor-link {
+    color: #f39c12;
+    border: 1px solid #f39c12;
+}
+
+/* Avatar y Nombre */
+.user-info-mini {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #333;
+    /* Truco por si el nombre es larguísimo */
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    transition: border-color 0.3s;
+}
+
+.nav-avatar:hover {
+    border-color: #2ecc71;
+}
+
+.nav-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eee;
+    color: #777;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Responsive básico */
+@media (max-width: 1024px) { /* Aumenté esto porque hay muchos enlaces */
+    .nav-links {
+        display: none; /* Aquí iría tu menú hamburguesa en el futuro */
+    }
+}

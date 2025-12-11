@@ -1,0 +1,47 @@
+.user-info-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f8fff9;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(120, 150, 120, 0.1);
+}
+
+.user-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00ff88;
+  margin-bottom: 15px;
+}
+
+.user-placeholder {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #d4f0dd;
+  color: #4c8c67;
+  border: 2px solid #00ff88;
+  margin-bottom: 15px;
+}
+
+.edit-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #00ff88;
+  color: #1e1e1e;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.edit-button:hover {
+  background-color: #27ae60;
+  color: white;
+}

@@ -1,0 +1,88 @@
+/* Dashboard.css */
+
+/* Contenedor principal */
+.dashboard-container {
+  max-width: 900px;
+  margin: 80px auto 40px; /* deja espacio para el navbar fijo */
+  padding: 30px 25px;
+  text-align: center;
+  background: #f8fff9; /* verde pastel muy suave */
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(120, 150, 120, 0.1);
+  animation: fadeIn 0.6s ease;
+}
+
+/* Título */
+.dashboard-title {
+  color: #4c8c67;
+  font-size: 36px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Saludo */
+.dashboard-welcome {
+  color: #5f6f63;
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+/* Contenedor de tarjetas horizontal */
+.cards-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* permite que bajen si no caben en una línea */
+}
+
+/* Tarjeta horizontal */
+.card {
+  display: flex;
+  flex-direction: row; /* horizontal */
+  align-items: center;
+  background-color: #e0f2e9; /* verde pastel suave */
+  border-radius: 15px;
+  padding: 20px 25px;
+  min-width: 250px;
+  max-width: 350px;
+  gap: 15px; /* separa icono del texto */
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  box-shadow: 0 4px 12px rgba(120, 150, 120, 0.08);
+  cursor: pointer;
+}
+
+/* Efecto hover en tarjetas */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(120, 150, 120, 0.15);
+  background-color: #d1f0df;
+}
+
+/* Contenido de la tarjeta */
+.card-content {
+  text-align: left;
+}
+
+.card-content h3 {
+  color: #3e7f5e;
+  margin-bottom: 6px;
+  font-size: 20px;
+}
+
+.card-content p {
+  color: #5f6f63;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

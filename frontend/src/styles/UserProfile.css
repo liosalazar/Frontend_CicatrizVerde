@@ -1,0 +1,155 @@
+/* --- Tarjeta Principal --- */
+.user-profile-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  max-width: 500px;
+  margin: 0 auto; /* Centrado */
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid #e0e0e0;
+}
+
+/* --- Encabezado (Foto y Nombre) --- */
+.profile-header {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Fondo degradado sutil */
+  padding: 30px 20px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+/* --- Foto de Perfil / Avatar --- */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px; /* Centrado y margen abajo */
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  overflow: hidden;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen llene el círculo sin deformarse */
+}
+
+.avatar-placeholder {
+  font-size: 3rem;
+  color: #777;
+  font-weight: bold;
+}
+
+/* --- Nombre y Rol --- */
+.profile-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.role-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: white;
+}
+
+/* Colores dinámicos según el rol */
+.role-admin {
+  background-color: #e74c3c; /* Rojo */
+  box-shadow: 0 2px 5px rgba(231, 76, 60, 0.4);
+}
+
+.role-asesor {
+  background-color: #f1c40f; /* Dorado */
+  color: #333; /* Texto oscuro para contraste */
+  box-shadow: 0 2px 5px rgba(241, 196, 15, 0.4);
+}
+
+.role-cliente {
+  background-color: #2ecc71; /* Verde */
+  box-shadow: 0 2px 5px rgba(46, 204, 113, 0.4);
+}
+
+/* --- Detalles del Perfil --- */
+.profile-details {
+  padding: 25px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item strong {
+  color: #333;
+}
+
+/* --- Estilos extra para la página contenedora (UserInfoPage) --- */
+.user-info-page {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.page-title {
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.action-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.edit-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
+}
+
+.back-button {
+  background-color: transparent;
+  color: #7f8c8d;
+  border: 2px solid #bdc3c7;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  border-color: #34495e;
+  color: #34495e;
+}
