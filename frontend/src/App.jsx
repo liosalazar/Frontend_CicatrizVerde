@@ -16,7 +16,6 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
-import UserInfoPage from './pages/UserInfoPage';
 
 // Componentes
 import Navbar from "./components/Navbar";
