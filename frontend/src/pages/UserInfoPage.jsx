@@ -23,7 +23,6 @@ const UserInfoPage = () => {
     <div className="user-info-page">
       <h1 className="page-title">Mi Perfil</h1>
 
-      {/* Aquí insertamos la TARJETA INTELIGENTE */}
       <UserProfile />
 
       <div className="action-buttons">

@@ -16,6 +16,8 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import UserInfoPage from './pages/UserInfoPage';
+
 // Componentes
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -45,7 +47,7 @@ const App = () => {
               <Route path="/terms" element={<Terms />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-  
+              <Route path="/perfil" element={<UserInfoPage />} />
             </Routes>
           </div>
 
