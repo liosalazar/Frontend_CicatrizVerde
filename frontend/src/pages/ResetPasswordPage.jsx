@@ -24,7 +24,7 @@ const ResetPasswordPage = () => {
 
     try {
       // LLAMADA AL BACKEND: Envía el token y la nueva contraseña
-      const response = await fetch(`http://localhost:5000/api/auth/reset-password/${token}`, {
+      const response = await fetch(`https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/auth/reset-password/${token}`, {
         method: "PUT", // O POST, depende de tu backend
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: newPassword }),

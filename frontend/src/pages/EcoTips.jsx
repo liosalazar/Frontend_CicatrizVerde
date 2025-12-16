@@ -21,7 +21,7 @@ const EcoTips = () => {
   useEffect(() => {
     const fetchTips = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/tips");
+        const res = await fetch("https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/api/tips");
         const data = await res.json();
         
         if (data.success) {

@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
 
     try {
       // Asegúrate de que la URL coincida con tu ruta en el backend
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      const response = await fetch("https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

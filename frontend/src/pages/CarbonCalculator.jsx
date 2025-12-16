@@ -47,47 +47,32 @@ const CarbonCalculator = () => {
 
     setResults({ total, pieData });
     
-    // Opcional: Auto-scroll hacia abajo
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   };
 
-  // --- NUEVA LÓGICA: GUARDAR EN DB ---
   const saveData = async () => {
     if (!results) return;
     setLoadingSave(true);
 
     try {
-      // Recuperamos el token del localStorage (o de tu Context)
-      const token = localStorage.getItem("token"); 
-
-      const response = await fetch("http://localhost:5000/api/measurements/save", {
+      await apiClient("/api/measurements/save", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Enviamos el token para saber quién es el usuario
-        },
-        body: JSON.stringify({
+        body: {
           energy: formData.energy || 0,
           water: formData.water || 0,
           transport: formData.transport || 0,
           waste: formData.waste || 0,
           total: results.total
-        }),
+        },
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        toast({
-          title: "¡Guardado! 💾",
-          description: "Esta medición se ha añadido a tu historial.",
-          className: "bg-green-600 text-white border-none",
-        });
-        // Opcional: Redirigir al dashboard tras guardar
-        setTimeout(() => navigate("/dashboard"), 1500);
-      } else {
-        throw new Error(data.message);
-      }
+      toast({
+        title: "¡Guardado! 💾",
+        description: "Esta medición se ha añadido a tu historial.",
+        className: "bg-green-600 text-white border-none",
+      });
+      
+      setTimeout(() => navigate("/dashboard"), 1500);
 
     } catch (error) {
       toast({

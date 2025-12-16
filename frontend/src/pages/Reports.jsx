@@ -27,12 +27,12 @@ const Reports = () => {
 
     try {
       // Cargar Plantillas
-      const resTemp = await fetch("http://localhost:5000/api/reports/templates");
+      const resTemp = await fetch("https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/api/reports/templates");;
       const dataTemp = await resTemp.json();
       if (dataTemp.success) setTemplates(dataTemp.data);
 
       // Cargar Historial del Usuario
-      const resMy = await fetch("http://localhost:5000/api/reports/my-reports", {
+      const resMy = await fetch("https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/api/reports/my-reports", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const dataMy = await resMy.json();
@@ -55,7 +55,7 @@ const Reports = () => {
     setGenerating(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/reports/generate", {
+      const res = await fetch("https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/api/reports/generate", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",

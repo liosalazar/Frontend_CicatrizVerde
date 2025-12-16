@@ -12,7 +12,7 @@ const WasteManagement = () => {
   useEffect(() => {
     const fetchWasteTypes = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/waste/types");
+        const res = await fetch("https://4ywtvryh4f.execute-api.us-east-2.amazonaws.com/dev/api/waste/types");
         const data = await res.json();
         if (data.success) {
           setWasteTypes(data.data);
