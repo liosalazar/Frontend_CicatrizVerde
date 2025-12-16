@@ -23,7 +23,7 @@ const EditProfilePage = () => {
       setName(user.name || "");
       setIdentifier(user.identifier || "");
       setEmail(user.email || "");
-      setPhoto(user.photo || "");
+      setPhoto(user.profile_picture || user.photo || "");
     }
   }, [user]);
 
@@ -41,7 +41,7 @@ const EditProfilePage = () => {
       name,
       identifier,
       email,
-      photo, // Se envía como cadena Base64 (texto largo)
+      profile_picture: photo, // Se envía como cadena Base64 (texto largo)
     });
 
     setLoading(false); // Desbloquear botón
@@ -55,7 +55,7 @@ const EditProfilePage = () => {
     // 3. Si todo salió bien, mensaje de éxito y redirección
     setMsg("¡Perfil actualizado correctamente!");
     setTimeout(() => {
-      navigate("/user-info");
+      navigate("/perfil");
     }, 1500); // Pequeña pausa para que el usuario lea el mensaje
   };
 

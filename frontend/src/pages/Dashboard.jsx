@@ -23,7 +23,7 @@ const Dashboard = () => {
       </h2>
 
       <div className="dashboard-actions">
-        <Link to="/user-info" className="dash-button">
+        <Link to="/perfil" className="dash-button">
           Ver mi información
         </Link>
       </div>
