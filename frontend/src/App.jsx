@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
+import { Toaster } from "./components/ui/toaster"; 
 
 // Páginas
 import EditProfilePage from "./pages/EditProfilePage";
@@ -16,6 +17,8 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import ServicesPage from "./pages/ServicesPage";
+import CarbonCalculator from "./pages/CarbonCalculator";
 
 // Componentes
 import Navbar from "./components/Navbar";
@@ -47,10 +50,19 @@ const App = () => {
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
               <Route path="/perfil" element={<UserInfoPage />} />
+              <Route path="/servicios" element={<ServicesPage />} />
+              <Route path="/calcular" element={<CarbonCalculator />} />
+              <Route path="/consejos" element={<div style={{padding: 50}}><h1>Consejos próximamente...</h1></div>} />
+              <Route path="/residuos" element={<div style={{padding: 50}}><h1>Gestión de Residuos próximamente...</h1></div>} />
+              <Route path="/reportes" element={<div style={{padding: 50}}><h1>Reportes próximamente...</h1></div>} />
+
+              
             </Routes>
           </div>
 
           <Footer /> 
+
+          <Toaster /> 
 
         </div>
       </Router>

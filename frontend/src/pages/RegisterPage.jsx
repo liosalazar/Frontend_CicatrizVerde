@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { useUser } from "../context/UserContext";
-import { useNavigate, Link } from "react-router-dom"; // Importamos Link
-import "../styles/Login.css"; // Reutilizamos los estilos del Login
+import { useNavigate, Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast"; // <--- 1. IMPORTAR
+import "../styles/Login.css";
 
 const RegisterPage = () => {
   const { register } = useUser();
   const navigate = useNavigate();
+  const { toast } = useToast(); // <--- 2. INICIALIZAR
 
   const [name, setName] = useState("");
   const [identifier, setIdentifier] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [msg, setMsg] = useState("");
+  // const [msg, setMsg] = useState(""); // <--- ELIMINADO
   const [loading, setLoading] = useState(false);
 
-  // LOGICA (Intacta)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg("");
     setLoading(true);
 
     const res = await register({
@@ -31,11 +31,22 @@ const RegisterPage = () => {
     setLoading(false);
 
     if (!res.success) {
-      setMsg(res.message);
+      // 3. ERROR CON TOAST
+      toast({
+        variant: "destructive",
+        title: "Error de registro",
+        description: res.message || "No se pudo crear la cuenta.",
+      });
       return;
     }
 
-    setMsg("Usuario registrado correctamente");
+    // 4. ÉXITO CON TOAST
+    toast({
+      title: "¡Cuenta creada! 🎉",
+      description: "Bienvenido a la comunidad de Cicatriz Verde.",
+      className: "bg-green-600 text-white border-none",
+    });
+
     setTimeout(() => {
         navigate("/perfil");
     }, 1500);
@@ -118,13 +129,7 @@ const RegisterPage = () => {
             {loading ? "Registrando..." : "Registrarme"}
           </button>
 
-          {/* Mensajes de Feedback Estilizados */}
-          {msg && (
-            <div className={msg.includes("correctamente") ? "success-msg" : "error-msg"}>
-              {msg.includes("correctamente") ? "✅ " : "⚠️ "} 
-              {msg}
-            </div>
-          )}
+          {/* ELIMINADO: El bloque {msg && ...} ya no es necesario */}
 
         </form>
 

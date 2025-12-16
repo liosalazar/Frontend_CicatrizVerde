@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+// 1. Importamos el hook que acabamos de crear/traducir
+import { useToast } from "../hooks/use-toast"; 
 import "../styles/EditProfile.css";
 
 const EditProfilePage = () => {
   const { user, updateUser } = useUser();
   const navigate = useNavigate();
+  // 2. Inicializamos el toast
+  const { toast } = useToast(); 
 
   // Estados locales para el formulario
   const [name, setName] = useState("");
@@ -13,11 +17,10 @@ const EditProfilePage = () => {
   const [email, setEmail] = useState("");
   const [photo, setPhoto] = useState("");
 
-  // Estados para UX (Mensajes y Carga)
-  const [msg, setMsg] = useState("");
+  // Estado de carga (ya no necesitamos 'msg')
   const [loading, setLoading] = useState(false);
 
-  // Efecto para cargar los datos iniciales cuando 'user' esté disponible
+  // Efecto para cargar los datos iniciales
   useEffect(() => {
     if (user) {
       setName(user.name || "");
@@ -27,49 +30,59 @@ const EditProfilePage = () => {
     }
   }, [user]);
 
-  // Si no hay usuario, mostramos aviso (o podrías redirigir al login)
   if (!user) return <p>Cargando datos o no autorizado...</p>;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg("");       // Limpiar mensajes previos
     setLoading(true); // Bloquear botón
 
-    // 1. Llamamos a la función del Contexto y ESPERAMOS (await) la respuesta
     const res = await updateUser({
-      ...user, // Mantenemos otros datos que no estén en el formulario (como ID)
+      ...user,
       name,
       identifier,
       email,
-      profile_picture: photo, // Se envía como cadena Base64 (texto largo)
+      profile_picture: photo,
     });
 
     setLoading(false); // Desbloquear botón
 
-    // 2. Verificamos si hubo éxito
+    // 3. Verificamos si hubo éxito (Con Toast Rojo)
     if (!res.success) {
-      setMsg(res.message || "Error al actualizar perfil");
-      return; // Detenemos la función, no navegamos
+      toast({
+        variant: "destructive", // Esto hace que salga rojo (si tienes los estilos de shadcn)
+        title: "Error al actualizar",
+        description: res.message || "Hubo un problema, intenta de nuevo.",
+      });
+      return; 
     }
 
-    // 3. Si todo salió bien, mensaje de éxito y redirección
-    setMsg("¡Perfil actualizado correctamente!");
+    // 4. Éxito (Con Toast Normal/Verde)
+    toast({
+      title: "¡Perfil Actualizado!",
+      description: "Tus datos se han guardado correctamente.",
+      duration: 3000, // Dura 3 segundos
+    });
+
     setTimeout(() => {
-      navigate("/perfil");
-    }, 1500); // Pequeña pausa para que el usuario lea el mensaje
+      navigate("/perfil"); // Ajusta esta ruta si tu perfil está en "/user-info"
+    }, 1500); 
   };
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validación opcional de tamaño (ej. máx 2MB) para no saturar la base de datos
       if (file.size > 2 * 1024 * 1024) {
-          alert("La imagen es muy pesada. Intenta con una menor a 2MB.");
+          // También podemos usar toast para validaciones
+          toast({
+            variant: "destructive",
+            title: "Archivo muy pesado",
+            description: "La imagen debe pesar menos de 2MB.",
+          });
           return;
       }
 
       const reader = new FileReader();
-      reader.onload = () => setPhoto(reader.result); // Convierte imagen a texto Base64
+      reader.onload = () => setPhoto(reader.result); 
       reader.readAsDataURL(file);
     }
   };
@@ -106,16 +119,11 @@ const EditProfilePage = () => {
         {photo && (
           <div className="photo-preview">
             <p>Vista previa:</p>
-            <img src={photo} alt="Preview" />
+            <img src={photo} alt="Preview" style={{ maxWidth: '150px', borderRadius: '10px' }}/>
           </div>
         )}
 
-        {/* Mensaje de estado */}
-        {msg && (
-            <p style={{ color: msg.includes("Error") ? "red" : "green", fontWeight: "bold" }}>
-                {msg}
-            </p>
-        )}
+        {/* Ya borramos el párrafo <p>{msg}</p> porque ahora salen flotando */}
 
         <button type="submit" disabled={loading}>
           {loading ? "Guardando..." : "Guardar Cambios"}

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { useUser } from "../context/UserContext";
-import { useNavigate, Link } from "react-router-dom"; // Importamos Link para navegar
-import "../styles/Login.css"; // Asegúrate de importar el CSS
+import { useNavigate, Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast"; // <--- 1. IMPORTAR
+import "../styles/Login.css";
 
 const LoginPage = () => {
   const { login } = useUser();
   const navigate = useNavigate();
+  const { toast } = useToast(); // <--- 2. INICIALIZAR
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
+  // const [msg, setMsg] = useState(""); // <--- ELIMINADO: Ya no lo necesitamos
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg("");
     setLoading(true);
 
     const res = await login(identifier, password);
@@ -22,9 +23,21 @@ const LoginPage = () => {
     setLoading(false);
 
     if (!res.success) {
-      setMsg(res.message);
+      // 3. ERROR CON TOAST
+      toast({
+        variant: "destructive", // Se pone rojo automáticamente
+        title: "Error de acceso",
+        description: res.message || "Usuario o contraseña incorrectos.",
+      });
       return;
     }
+
+    // 4. ÉXITO (Opcional, pero se ve bien antes de redirigir)
+    toast({
+        title: "¡Bienvenido de nuevo! 👋",
+        description: "Iniciando sesión...",
+        className: "bg-green-600 text-white border-none",
+    });
 
     navigate("/perfil");
   };
@@ -45,7 +58,7 @@ const LoginPage = () => {
           <div className="input-group">
             <label htmlFor="identifier">Usuario</label>
             <div className="input-wrapper">
-              <span className="input-icon">👤</span> {/* O usa <i className="fas fa-user"></i> */}
+              <span className="input-icon">👤</span>
               <input
                 type="text"
                 id="identifier"
@@ -61,7 +74,7 @@ const LoginPage = () => {
           <div className="input-group">
             <label htmlFor="password">Contraseña</label>
             <div className="input-wrapper">
-              <span className="input-icon">🔒</span> {/* O usa <i className="fas fa-lock"></i> */}
+              <span className="input-icon">🔒</span>
               <input
                 type="password"
                 id="password"
@@ -87,8 +100,7 @@ const LoginPage = () => {
             {loading ? "Verificando..." : "Iniciar Sesión"}
           </button>
 
-          {/* Mensaje de Error */}
-          {msg && <div className="error-msg">⚠️ {msg}</div>}
+          {/* ELIMINADO: {msg && <div className="error-msg">⚠️ {msg}</div>} */}
         </form>
 
         {/* Pie de la tarjeta */}

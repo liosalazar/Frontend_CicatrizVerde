@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/Login.css"; // Reutilizamos estilos
+import { useToast } from "@/hooks/use-toast"; // <--- Importamos Toast
+import "../styles/Login.css";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast(); // <--- Inicializamos Toast
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg("");
     setLoading(true);
 
     try {
-      // LLAMADA AL BACKEND: Pide enviar el correo de recuperación
+      // Asegúrate de que la URL coincida con tu ruta en el backend
       const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,13 +24,29 @@ const ForgotPasswordPage = () => {
       setLoading(false);
 
       if (response.ok) {
-        setMsg("✅ Se ha enviado un enlace de recuperación a tu correo.");
+        // ÉXITO (Status 200 del Backend)
+        toast({
+          title: "¡Correo enviado! 📧",
+          description: data.message || "Revisa tu bandeja de entrada.",
+          className: "bg-green-600 text-white border-none",
+        });
+        setEmail(""); // Limpiar el campo
       } else {
-        setMsg(`⚠️ ${data.message || "Error al solicitar recuperación"}`);
+        // ERROR (Status 400 del Backend)
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.message || "No se pudo procesar la solicitud.",
+        });
       }
     } catch (error) {
       setLoading(false);
-      setMsg("⚠️ Error de conexión con el servidor.");
+      // ERROR DE RED (Backend apagado o URL mal escrita)
+      toast({
+        variant: "destructive",
+        title: "Error de conexión",
+        description: "No se pudo contactar con el servidor.",
+      });
     }
   };
 
@@ -60,13 +76,6 @@ const ForgotPasswordPage = () => {
           <button type="submit" className="btn-login" disabled={loading}>
             {loading ? "Enviando..." : "Enviar Enlace"}
           </button>
-
-          {/* Mensajes de Feedback */}
-          {msg && (
-            <div className={msg.includes("✅") ? "success-msg" : "error-msg"}>
-              {msg}
-            </div>
-          )}
         </form>
 
         <div className="login-footer">

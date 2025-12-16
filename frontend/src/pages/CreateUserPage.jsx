@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useUser } from "../context/UserContext";
-import { useNavigate } from "react-router-dom"; // Para redirigir al terminar
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast"; // <--- 1. IMPORTAR
 
 const CreateUserPage = () => {
   const { updateUser } = useUser();
   const navigate = useNavigate();
+  const { toast } = useToast(); // <--- 2. INICIALIZAR
 
   const [formData, setFormData] = useState({
     name: "",
@@ -14,8 +16,7 @@ const CreateUserPage = () => {
     department: "",
   });
 
-  // Estados para feedback visual
-  const [msg, setMsg] = useState("");
+  // Solo necesitamos estado de carga, el 'msg' se va porque usamos Toasts
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -27,38 +28,49 @@ const CreateUserPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg("");
     
     // Validación básica
     if (!formData.name.trim() || !formData.dni.trim()) {
-        setMsg("Nombre y DNI son obligatorios.");
+        toast({
+            variant: "destructive", // Rojo para errores
+            title: "Datos faltantes",
+            description: "El Nombre y DNI son obligatorios.",
+        });
         return;
     }
 
-    setLoading(true); // Bloquear botón
+    setLoading(true);
 
-    // 1. Llamada al Backend (esperamos respuesta)
-    // Nota: 'dni' se mapeará a 'identifier' en el backend si así lo decides
+    // 1. Llamada al Backend
     const res = await updateUser({
         name: formData.name,
-        identifier: formData.dni, // Unificamos nombres con la DB
+        identifier: formData.dni,
         age: formData.age,
         country: formData.country,
         department: formData.department
     });
 
-    setLoading(false); // Desbloquear botón
+    setLoading(false);
 
     // 2. Verificar error
     if (!res.success) {
-        setMsg(res.message || "Error al guardar los datos.");
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: res.message || "No se pudo guardar el perfil.",
+        });
         return;
     }
 
     // 3. Éxito
-    setMsg("¡Perfil completado con éxito!");
+    toast({
+        title: "¡Perfil completado! 🎉",
+        description: "Tus datos se han guardado correctamente.",
+        className: "bg-green-600 text-white border-none", // Opcional: Para darle un toque verde
+    });
+
     setTimeout(() => {
-        navigate("/dashboard"); // Redirigir al Dashboard
+        navigate("/dashboard");
     }, 1500);
   };
 
@@ -120,16 +132,21 @@ const CreateUserPage = () => {
           style={{ display: "block", width: "100%", margin: "10px 0", padding: "8px" }}
         />
 
-        {msg && (
-            <p style={{ color: msg.includes("éxito") ? "green" : "red", fontWeight: "bold" }}>
-                {msg}
-            </p>
-        )}
+        {/* --- YA NO NECESITAMOS EL PÁRRAFO DE {msg} AQUÍ --- */}
 
         <button 
             type="submit" 
             disabled={loading} 
-            style={{ marginTop: "10px", padding: "10px 20px", cursor: loading ? "not-allowed" : "pointer" }}
+            style={{ 
+                marginTop: "10px", 
+                padding: "10px 20px", 
+                cursor: loading ? "not-allowed" : "pointer",
+                width: "100%",
+                backgroundColor: loading ? "#ccc" : "#2ecc71", // Un toque visual simple
+                color: "white",
+                border: "none",
+                borderRadius: "4px"
+            }}
         >
           {loading ? "Guardando..." : "Guardar Datos"}
         </button>
