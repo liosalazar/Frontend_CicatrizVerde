@@ -1,0 +1,190 @@
+/* Contenedor Principal */
+.reports-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 0 0 2rem 0;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+/* Header */
+.reports-header {
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.header-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.reports-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Intro */
+.reports-intro {
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+}
+.reports-intro h2 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #1e3131; }
+.reports-intro p { color: #666; }
+
+/* Contenedor Central */
+.reports-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Sección: Generar Reportes (Templates) */
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+.section-desc {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.report-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.icon-box {
+  width: 50px; height: 50px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  color: white;
+}
+/* Colores de iconos */
+.bg-eco-primary { background-color: #2ecc71; }
+.bg-eco-forest { background-color: #27ae60; }
+
+.card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.card-desc { font-size: 0.9rem; color: #666; margin-bottom: 1rem; min-height: 40px;}
+
+.badges-row { display: flex; gap: 8px; margin-bottom: 1rem; }
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-gray { background: #f1f5f9; color: #475569; }
+.badge-outline { border: 1px solid #e2e8f0; color: #475569; }
+
+.details-row {
+  font-size: 0.85rem;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.btn-generate {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.btn-generate:hover { background-color: #27ae60; }
+
+/* Sección Inferior (Grid 2 columnas) */
+.lower-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 1024px) {
+  .lower-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Lista Reciente */
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: white;
+}
+.recent-info h4 { margin: 0 0 5px 0; font-size: 0.95rem; }
+.meta-info { font-size: 0.8rem; color: #888; display: flex; gap: 10px; align-items: center; }
+.btn-download {
+  background-color: #f0fdf4;
+  color: #166534;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex; align-items: center; gap: 5px;
+}
+.btn-download:hover { background-color: #2ecc71; color: white; }
+
+/* Vista Previa (Simulando hoja de papel) */
+.preview-paper {
+  background: #fafafa;
+  padding: 2rem;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+}
+.paper-header { text-align: center; margin-bottom: 1.5rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem;}
+.paper-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; }
+.paper-highlight { color: #2ecc71; font-weight: bold; }
+.paper-recs { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #ddd; font-size: 0.85rem; color: #666; }
+
+/* CTA Final */
+.cta-box {
+  margin-top: 3rem;
+  background: linear-gradient(to right, #e0f7fa, #e8f5e9);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+}
+.cta-btns { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+.btn-outline { background: transparent; border: 1px solid #2ecc71; color: #2ecc71; padding: 10px 20px; border-radius: 6px; cursor: pointer;}

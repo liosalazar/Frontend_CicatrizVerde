@@ -19,6 +19,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import ServicesPage from "./pages/ServicesPage";
 import CarbonCalculator from "./pages/CarbonCalculator";
+import EcoTips from "./pages/EcoTips"
+import Reports from "./pages/Reports";
 
 // Componentes
 import Navbar from "./components/Navbar";
@@ -52,10 +54,10 @@ const App = () => {
               <Route path="/perfil" element={<UserInfoPage />} />
               <Route path="/servicios" element={<ServicesPage />} />
               <Route path="/calcular" element={<CarbonCalculator />} />
-              <Route path="/consejos" element={<div style={{padding: 50}}><h1>Consejos próximamente...</h1></div>} />
+              <Route path="/consejos" element={<EcoTips />} />
               <Route path="/residuos" element={<div style={{padding: 50}}><h1>Gestión de Residuos próximamente...</h1></div>} />
-              <Route path="/reportes" element={<div style={{padding: 50}}><h1>Reportes próximamente...</h1></div>} />
-
+              <Route path="/reportes" element={<Reports />} />
+            
               
             </Routes>
           </div>
