@@ -1,17 +1,25 @@
 // src/pages/CarbonCalculator.jsx
 import { useState } from "react";
-import "../styles/CarbonCalculator.css"; 
-import { useToast } from "@/hooks/use-toast"; // <--- IMPORTANTE: Usamos Toasts
-import { useUser } from "../context/UserContext"; // Para saber si está logueado (opcional)
-
-import { ArrowLeft, Calculator, Zap, Droplets, Car, Trash2, Save } from "lucide-react"; // Añadí icono Save
 import { useNavigate } from "react-router-dom";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { 
+  ArrowLeft, Calculator, Zap, Droplets, Car, Trash2, Save 
+} from "lucide-react";
+import { 
+  PieChart, Pie, Cell, ResponsiveContainer, 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip 
+} from "recharts";
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { apiClient } from "../api/apiClient"; 
 
 const CarbonCalculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [loadingSave, setLoadingSave] = useState(false); // Estado de carga para guardar
+  const [loadingSave, setLoadingSave] = useState(false);
 
   const [formData, setFormData] = useState({
     energy: "",
@@ -25,7 +33,6 @@ const CarbonCalculator = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  // --- LÓGICA DE CÁLCULO (IGUAL QUE ANTES) ---
   const calculateFootprint = () => {
     const energy = parseFloat(formData.energy) || 0;
     const water = parseFloat(formData.water) || 0;
@@ -39,21 +46,25 @@ const CarbonCalculator = () => {
     const total = energyEmissions + waterEmissions + transportEmissions + wasteEmissions;
 
     const pieData = [
-      { name: "Energía", value: energyEmissions, color: "#2ecc71" },
-      { name: "Agua", value: waterEmissions, color: "#3498db" },
-      { name: "Transporte", value: transportEmissions, color: "#f39c12" },
-      { name: "Residuos", value: wasteEmissions, color: "#e74c3c" }
+      { name: "Energía", value: energyEmissions, color: "#10b981" },
+      { name: "Agua", value: waterEmissions, color: "#3b82f6" },
+      { name: "Transporte", value: transportEmissions, color: "#f59e0b" },
+      { name: "Residuos", value: wasteEmissions, color: "#ef4444" }
     ];
 
-    setResults({ total, pieData });
-    
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    const barData = [
+      { category: "Energía", emissions: energyEmissions },
+      { category: "Agua", emissions: waterEmissions },
+      { category: "Transp.", emissions: transportEmissions },
+      { category: "Resid.", emissions: wasteEmissions }
+    ];
+
+    setResults({ total, pieData, barData });
   };
 
   const saveData = async () => {
     if (!results) return;
     setLoadingSave(true);
-
     try {
       await apiClient("/api/measurements/save", {
         method: "POST",
@@ -69,11 +80,8 @@ const CarbonCalculator = () => {
       toast({
         title: "¡Guardado! 💾",
         description: "Esta medición se ha añadido a tu historial.",
-        className: "bg-green-600 text-white border-none",
       });
-      
       setTimeout(() => navigate("/dashboard"), 1500);
-
     } catch (error) {
       toast({
         variant: "destructive",
@@ -86,102 +94,86 @@ const CarbonCalculator = () => {
   };
 
   return (
-    <div className="carbon-page">
-      <div className="calc-container">
-        <button onClick={() => navigate("/servicios")} className="btn-back">
-           <ArrowLeft size={18} style={{marginRight: '8px'}} /> Volver a Servicios
-        </button>
+    <div className="min-h-screen bg-slate-50">
+      <header className="bg-white shadow-sm border-b p-4">
+        <div className="max-w-7xl mx-auto flex items-center">
+          <Button variant="ghost" onClick={() => navigate("/dashboard")} className="mr-4">
+            <ArrowLeft className="h-4 w-4 mr-2" /> Volver
+          </Button>
+          <Calculator className="h-6 w-6 text-emerald-600 mr-2" />
+          <h1 className="text-xl font-bold">Calculadora de Huella de Carbono</h1>
+        </div>
+      </header>
 
-        <main className="calc-grid">
-          
-          {/* --- FORMULARIO --- */}
-          <div className="calc-card">
-            <div className="card-header">
-              <div className="card-title">
-                 <Calculator size={24} color="#2ecc71"/> Calculadora de Huella
+      <main className="max-w-5xl mx-auto p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Formulario */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Datos de Consumo</CardTitle>
+              <CardDescription>Ingresa tus consumos mensuales.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2"><Zap className="h-4 w-4 text-emerald-500"/> Energía (kWh)</Label>
+                <Input type="number" placeholder="0" value={formData.energy} onChange={(e)=>handleInputChange("energy", e.target.value)} />
               </div>
-              <p className="card-desc">Ingresa los datos mensuales para calcular tus emisiones.</p>
-            </div>
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2"><Droplets className="h-4 w-4 text-blue-500"/> Agua (m³)</Label>
+                <Input type="number" placeholder="0" value={formData.water} onChange={(e)=>handleInputChange("water", e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2"><Car className="h-4 w-4 text-orange-500"/> Transporte (km)</Label>
+                <Input type="number" placeholder="0" value={formData.transport} onChange={(e)=>handleInputChange("transport", e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2"><Trash2 className="h-4 w-4 text-red-500"/> Residuos (kg)</Label>
+                <Input type="number" placeholder="0" value={formData.waste} onChange={(e)=>handleInputChange("waste", e.target.value)} />
+              </div>
+              <Button onClick={calculateFootprint} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
+                Calcular Huella
+              </Button>
+            </CardContent>
+          </Card>
 
-            <div className="card-content">
-              {/* Inputs (Igual que antes...) */}
-              <div className="input-group">
-                <label className="input-label"><Zap size={16} color="#f1c40f" /> Consumo de energía (kWh)</label>
-                <input type="number" className="calc-input" placeholder="Ej: 1500" value={formData.energy} onChange={(e) => handleInputChange("energy", e.target.value)} />
-              </div>
-              <div className="input-group">
-                <label className="input-label"><Droplets size={16} color="#3498db" /> Consumo de agua (m³)</label>
-                <input type="number" className="calc-input" placeholder="Ej: 50" value={formData.water} onChange={(e) => handleInputChange("water", e.target.value)} />
-              </div>
-              <div className="input-group">
-                <label className="input-label"><Car size={16} color="#e67e22" /> Transporte (km recorridos)</label>
-                <input type="number" className="calc-input" placeholder="Ej: 2000" value={formData.transport} onChange={(e) => handleInputChange("transport", e.target.value)} />
-              </div>
-              <div className="input-group">
-                <label className="input-label"><Trash2 size={16} color="#e74c3c" /> Residuos generados (kg)</label>
-                <input type="number" className="calc-input" placeholder="Ej: 200" value={formData.waste} onChange={(e) => handleInputChange("waste", e.target.value)} />
-              </div>
-
-              <button onClick={calculateFootprint} className="btn-calculate">
-                Calcular Resultados
-              </button>
-            </div>
-          </div>
-
-          {/* --- RESULTADOS --- */}
+          {/* Resultados y Gráficos */}
           {results && (
-            <div className="calc-card">
-              <div className="card-header">
-                <div className="card-title">Resultados</div>
-                <p className="card-desc">Tu impacto ambiental mensual estimado.</p>
-              </div>
-              
-              <div className="card-content">
-                <div className="result-box">
-                  <div className="result-number">
-                    {results.total.toFixed(2)} <span style={{fontSize: '1rem'}}>tCO₂</span>
-                  </div>
-                  <p className="result-label">Emisiones totales</p>
-                </div>
-
-                <div className="chart-container">
-                   <ResponsiveContainer width="100%" height="100%">
+            <Card>
+              <CardHeader>
+                <CardTitle>Tu Impacto: {results.total.toFixed(2)} tCO₂</CardTitle>
+                <CardDescription>Distribución de tus emisiones.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="h-48 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie data={results.pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} dataKey="value" paddingAngle={5}>
-                        {results.pieData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
+                      <Pie data={results.pieData} innerRadius={60} outerRadius={80} dataKey="value">
+                        {results.pieData.map((entry, index) => <Cell key={index} fill={entry.color} />)}
                       </Pie>
-                      <Tooltip formatter={(value) => [`${value.toFixed(2)} tCO₂`, "Emisión"]} />
+                      <Tooltip formatter={(val) => `${val.toFixed(2)} tCO₂`} />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                 
-                <div className="recommendation-box" style={{marginBottom: '20px'}}>
-                   <strong>💡 Análisis:</strong> Identifica el sector más grande en el gráfico y prioriza reducirlo.
+
+                <div className="h-48 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={results.barData}>
+                      <XAxis dataKey="category" fontSize={12} />
+                      <YAxis fontSize={12} />
+                      <Tooltip formatter={(val) => `${val.toFixed(2)} tCO₂`} />
+                      <Bar dataKey="emissions" fill="#10b981" />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
 
-                {/* --- BOTÓN DE GUARDAR (NUEVO) --- */}
-                <button 
-                    onClick={saveData} 
-                    disabled={loadingSave}
-                    className="btn-calculate"
-                    style={{ 
-                        backgroundColor: '#34495e', 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
-                        gap: '10px' 
-                    }}
-                >
-                    {loadingSave ? "Guardando..." : <><Save size={18} /> Guardar en mi Historial</>}
-                </button>
-
-              </div>
-            </div>
+                <Button onClick={saveData} disabled={loadingSave} variant="secondary" className="w-full gap-2">
+                  {loadingSave ? "Guardando..." : <><Save size={18} /> Guardar en Historial</>}
+                </Button>
+              </CardContent>
+            </Card>
           )}
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 };
